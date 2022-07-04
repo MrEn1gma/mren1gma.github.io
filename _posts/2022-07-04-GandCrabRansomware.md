@@ -17,4 +17,4 @@ toc: true
 
 - Ngoài ra, ở cột `Stats` trong chức năng `Section Viewer` cho mình biết được tại Virtual Offset `00001000` hiện kết quả là `Crypted Maybe`. Nhiều khả năng mã độc có sử dụng obfuscation nhằm che giấu những dữ kiện quan trọng.
 
-![infoPE](/assets/img/GandGrab_images/infoPE.png)
+![okchua](/assets/img/GandGrab_images/infoPE.png)
