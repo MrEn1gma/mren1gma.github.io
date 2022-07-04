@@ -1,6 +1,6 @@
 ---
 title: Malware Analysis GandCrab Ransomware
-date: 2022-07-04 11:21:00
+date: 2022-07-04 11:30:00 +0700
 categories: [MalwareAnalysis]
 tags: [gandcrab, malwareanalysis]
 toc: true
