@@ -3,6 +3,7 @@ title: Malware Analysis GandCrab Ransomware
 date: 2022-07-04 11:00:00
 categories: [MalwareAnalysis]
 tags: [gandcrab, malwareanalysis]
+toc: true
 ---
 
 ### Lời nói đầu
