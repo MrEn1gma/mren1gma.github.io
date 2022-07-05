@@ -118,19 +118,16 @@ print("OK.")
 
 ### Collect victim's information
 - Dựa trên kết quả sau khi thực hiện decrypt strings, dưới đây là danh sách các strings đặc biệt được sử dụng để lấy thông tin từ máy nạn nhân:
-
-```txt
-pc_user: Username của máy nạn nhân.
-pc_name: Tên máy nạn nhân.
-pc_group: 
-av: Anti-Virus.
-pc_lang: PC Language.
-pc_keyb: Loại bàn phím.
-os_major: Tên hệ điều hành.
-os_bit: x32/x64.
-ransom_id: ID của ransomware.
-hdd: 
-Domain: WORKGROUP/undefined
-ip: Địa chỉ IP của máy nạn nhân.
-version: Phiên bản mã độc GandCrab.
-```
+    - pc_user: Username của máy nạn nhân.
+    - pc_name: Tên máy nạn nhân.
+    - pc_group: 
+    - av: Anti-Virus.
+    - pc_lang: PC Language.
+    - pc_keyb: Loại bàn phím.
+    - os_major: Tên hệ điều hành.
+    - os_bit: x32/x64.
+    - ransom_id: ID của ransomware.
+    - hdd: 
+    - Domain: WORKGROUP/undefined
+    - ip: Địa chỉ IP của máy nạn nhân.
+    - version: Phiên bản mã độc GandCrab.
