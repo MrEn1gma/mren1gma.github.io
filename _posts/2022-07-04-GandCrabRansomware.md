@@ -21,7 +21,7 @@ toc: true
 
 ![sstatPE](/assets/img/GandCrab_images/sstatPE.png)
 
-### Obfuscated strings
+### Strings Obfuscaion
 - Các strings mà GandCrab sử dụng đều đã bị mã hoá. Hàm giải mã wide strings sẽ nhận 4 tham số truyền vào:
     - Tham số thứ nhất: ARC4 Key.
     - Tham số thứ hai: size của ARC4 Key.
@@ -112,3 +112,25 @@ for idx in range(len(ciphertext_list)):
 print("OK.")
 ```
 
+- Kết quả sau khi thực hiện script, có tất cả 158 strings đã được giải mã:
+
+![IDAPythonScript](/assets/img/GandCrab_images/idapython_script.png)
+
+### Collect victim's information
+- Dựa trên kết quả sau khi thực hiện decrypt strings, dưới đây là danh sách các strings đặc biệt được sử dụng để lấy thông tin từ máy nạn nhân:
+
+```Collect victim's information
+pc_user: Username của máy nạn nhân.
+pc_name: Tên máy nạn nhân.
+pc_group: 
+av: Anti-Virus.
+pc_lang: PC Language.
+pc_keyb: Loại bàn phím.
+os_major: Tên hệ điều hành.
+os_bit: x32/x64.
+ransom_id: ID của ransomware.
+hdd: 
+Domain: WORKGROUP/undefined
+ip: Địa chỉ IP của máy nạn nhân.
+version: Phiên bản mã độc GandCrab.
+```
