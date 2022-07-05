@@ -24,7 +24,7 @@ toc: true
 ### Obfuscated strings
 - Các strings mà GandCrab sử dụng đều đã bị mã hoá. Hàm giải mã wide strings sẽ nhận 4 tham số truyền vào:
     - Tham số thứ nhất: ARC4 Key.
-    - Thanm số thứ hai: size của ARC4 Key.
+    - Tham số thứ hai: size của ARC4 Key.
     - Tham số thứ ba: ARC4 Cipher, bắt đầu từ phần tử thứ 24.
     - Tham số cuối cùng: size ARC4 Cipher, phụ thuộc vào kết quả XOR của phần tử thứ 16 và phần tử thứ 20.
 
@@ -35,7 +35,7 @@ _BYTE *__cdecl sub_407563(int a1)
 }
 ```
 
-- Tham số đầu vào `a1` của hàm `sub_407563` là một mảng bytes dài, tham số đó được gọi từ một hàm con và sử dụng thuật toán ARC4 để giải mã các strings.
+- Tham số đầu vào `a1` của hàm `sub_407563` là một mảng bytes dài, tham số đó được gọi từ một hàm con và sử dụng thuật toán ARC4 để giải mã các mảng bytes.
 
 ```c++
 _BYTE *__cdecl sub_407581(int a1, unsigned int a2, _BYTE *a3, int a4)
@@ -82,5 +82,33 @@ _BYTE *__cdecl sub_407581(int a1, unsigned int a2, _BYTE *a3, int a4)
 }
 ```
 
-- Mã giả trên có sự tương đồng với một project mà mình đã tìm được trên GitHub: ![**ARC4 Implementation**](https://github.com/drFabio/RC4/blob/master/ARC4.cpp)
+- Mã giả trên có sự tương đồng với một project mà mình đã tìm được trên GitHub: [**ARC4 Implementation**](https://github.com/drFabio/RC4/blob/master/ARC4.cpp)
+
+### Decrypt strings
+- Với sự hỗ trợ của IDAPython, mình có thể viết script nhằm tự động hoá giải mã strings, full script mình đã public trên GitHub: [**Decrypt Strings**](https://github.com/MrEn1gma/GandCrab-Decrypt-String/blob/main/gandcrab_decrypt.py).
+
+- Dưới đây là một phần của IDAPython script:
+
+```python
+ciphertext_list, addr_xrefs = GetCipherText("sub_407563")
+for idx in range(len(ciphertext_list)):
+    inp = [i for i in bytes.fromhex(ciphertext_list[idx])[::-1]]
+    key = np.array(inp[:16], "<u1").tobytes()
+    sizeCipher = inp[16] ^ inp[20]
+    cipher = np.array(inp[24:24 + sizeCipher], "<u1").tobytes()
+    arc4 = ARC4.new(key)
+    out = arc4.decrypt(cipher)
+    plaintext = [i for i in out]
+
+    for j in range(len(plaintext)):
+        chk = 0
+        if(chk in plaintext):
+            plaintext.remove(0) # Sau khi decrypt xong, bỏ các byte 0 để print ra chuỗi hoàn chỉnh        
+    msg_output = "[" + str(hex(addr_xrefs[idx])) + "] | Encrypted string: 0x" + str(ciphertext_list[idx]) + " | Decrypted string: " + str("".join([chr(i) for i in plaintext]))
+    msg_cmt_output = "Decrypted string: " + str("".join([chr(i) for i in plaintext]))
+    idc.set_cmt(addr_xrefs[idx], msg_cmt_output, 0) # set comment tai ham do
+    print(msg_output)
+        
+print("OK.")
+```
 
