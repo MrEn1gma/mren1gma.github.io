@@ -119,7 +119,7 @@ print("OK.")
 ### Collect victim's information
 - Dựa trên kết quả sau khi thực hiện decrypt strings, dưới đây là danh sách các strings đặc biệt được sử dụng để lấy thông tin từ máy nạn nhân:
 
-```Collect victim's information
+```txt
 pc_user: Username của máy nạn nhân.
 pc_name: Tên máy nạn nhân.
 pc_group: 
