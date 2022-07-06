@@ -120,14 +120,38 @@ print("OK.")
 - Dựa trên kết quả sau khi thực hiện decrypt strings, dưới đây là danh sách các strings đặc biệt được sử dụng để lấy thông tin từ máy nạn nhân:
     - pc_user: Username của máy nạn nhân.
     - pc_name: Tên máy nạn nhân.
-    - pc_group: 
+    - pc_group: `WORKGROUP`
     - av: Anti-Virus.
     - pc_lang: PC Language.
     - pc_keyb: Loại bàn phím.
     - os_major: Tên hệ điều hành.
-    - os_bit: x32/x64.
+    - os_bit: `x32`/`x64`.
     - ransom_id: ID của ransomware.
-    - hdd: 
-    - Domain: WORKGROUP/undefined
+    - hdd: `UNKNOWN`/`NO_ROOT_DIR`/`REMOVABLE`/`FIXED`/`REMOTE`/`CDROM`/`RAMDISK`
+    - Domain: `WORKGROUP`/`undefined`
     - ip: Địa chỉ IP của máy nạn nhân.
     - version: Phiên bản mã độc GandCrab.
+
+- Hàm `decrypt_API` sẽ deobfuscate lần lượt `RegQueryValue` và `RegCloseKey`, mục đích để thực hiện lấy giá trị từ Key Value.
+
+```c++
+int __stdcall do_Registry_Keys(int a1, int a2, int a3, int a4, int a5, int a6)
+{
+  int (__stdcall *v6)(int, int, _DWORD, int, int *); // eax
+  int v7; // edi
+  int v8; // esi
+  int (__stdcall *v9)(int, int, _DWORD, _DWORD, int, int *); // eax
+
+  v6 = (int (__stdcall *)(int, int, _DWORD, int, int *))decrypt_API(5, 0xAAD67FEE);// RegQueryValue
+  v7 = 0;
+  if ( v6(a1, a2, 0, 131097, &a6) )
+    return 0;
+  v8 = a6;
+  a2 = a5;
+  v9 = (int (__stdcall *)(int, int, _DWORD, _DWORD, int, int *))decrypt_API(5, 0x1802E7DE);// RegCloseKey
+  if ( !v9(v8, a3, 0, 0, a4, &a2) )
+    v7 = 1;
+  sub_401AFB(a6);
+  return v7;
+}
+```
