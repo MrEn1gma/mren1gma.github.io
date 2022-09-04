@@ -116,11 +116,16 @@ print("OK.")
 
 ![IDAPythonScript](/assets/img/GandCrab_images/idapython_script.png)
 
+### Random Extension
+- Mã độc thực hiện quá trình tạo extension ngẫu nhiên gồm các bước:
+    - Gọi hàm API `CryptGenRandom` sau đó tính toán độ dài chuỗi ngẫu nhiên nằm trong khoảng được đã được xác định.
+    - 
+
 ### Collect victim's information
 - Dựa trên kết quả sau khi thực hiện decrypt strings, dưới đây là danh sách các strings đặc biệt được sử dụng để lấy thông tin từ máy nạn nhân:
     - pc_user: Username của máy nạn nhân.
     - pc_name: Tên máy nạn nhân.
-    - pc_group: `WORKGROUP`
+    - pc_group: `WORKGROUP` / `undefined`
     - av: Anti-Virus.
     - pc_lang: PC Language.
     - pc_keyb: Loại bàn phím.
@@ -128,7 +133,6 @@ print("OK.")
     - os_bit: `x32`/`x64`.
     - ransom_id: ID của ransomware.
     - hdd: `UNKNOWN`/`NO_ROOT_DIR`/`REMOVABLE`/`FIXED`/`REMOTE`/`CDROM`/`RAMDISK`
-    - Domain: `WORKGROUP`/`undefined`
     - ip: Địa chỉ IP của máy nạn nhân.
     - version: Phiên bản mã độc GandCrab.
 
@@ -155,3 +159,52 @@ int __stdcall do_Registry_Keys(int a1, int a2, int a3, int a4, int a5, int a6)
   return v7;
 }
 ```
+
+### PC DATA
+- Cách hoạt động
+    - Những dữ liệu sau khi mã độc thu thập được, nối các chuỗi dữ liệu bằng dấu `&` thành một chuỗi lớn và lưu vào biến `general_in4_PC_DATA`. Sau đó bắt đầu mã hoá chúng bằng thuật toán ARC4 với key: `.oj=294~!z3)9n-1,8^)o((q22)lb$`
+
+```c++
+int __cdecl encrypt_PC_DATA(int a1, int a2)
+{
+  void *v2; // esi
+  int v3; // eax
+  char v5[256]; // [esp+4h] [ebp-100h] BYREF
+
+  v2 = VirtualAlloc(0, 0x20u, 0x3000u, 4u);
+  sub_4074C8(v2, ".oj=294~!z3)9n-1,8^)o((q22)lb$");// key: .oj=294~!z3)9n-1,8^)o((q22)lb$
+  if ( !v2 )
+    return a1;
+  sub_40C70B(v5, 0, 0x100u);
+  v3 = sub_405CA9(v2);
+  start_ARC4(v5, v2, v3);
+  ARC4_Decrypt(v5, a1, a2);
+  VirtualFree(v2, 0, 0x8000u);
+  return a1;
+}
+```
+- Biến `general_in4_PC_DATA` sau khi mã hoá và vùng nhớ lưu các bytes đã bị mã hoá:
+
+![enc1](/assets/img/GandCrab_images/genPCDATA.png)
+![enc2](/assets/img/GandCrab_images/encPCDATA.png)
+
+- Ngoài ra, biến `general_in4_PC_DATA` được gọi từ hàm `export_GANDGRAB_key_and_info_PC`, nhằm export ra file có format là `%extension%-MANUAL.txt`
+- Dựa vào pseudo-code trên, mình có thể viết lại script để giải mã `PC_DATA`:
+
+```python
+# Decrypt PC_DATA
+print("\n--- PC_DATA ---")
+pc_key = ".oj=294~!z3)9n-1,8^)o((q22)lb$".encode()
+pc_cipher = b64decode("7ftDEgLb/ZS0lcmZbHM61I/J+AOoD+QKyw7LboogFHYeWLYCxZ+XYFtxBmDb9KHJOJDfAveVruDURWTIXHRKQxSaxLPQzr4SaOgCapOX2qbLGOIpU0uVIkugicQ2qivs7UgEXVJiDcF0iWP/gFL8WqBHGyOgMof74iZHO883kWa60KsRG/ofEubBktl3sqmHT/UeIK90f4NTA3Q0Aa7fDOtFnCOTB5ome7FLZ/fMCt27gAb2/52sUzN7xdxdWKoyoIWs5zhHRnLzMN2B2FCdeiqo6lrnnIaZ6V9BSTXO4zB9mPr7qICkGFwpU6i/RSEVcPfH0wpSWSCYtNWJJNBZBilqqMZrR7W3ZLHPmYGRj0eJP9/y/fM3LOXjXaO0r1pWo+YkTxTJi/a4L0V0svf5S0uz66BfoUfFwZ2CPDSx4yhFudDoMFoN6ieVyOmvqBxvfLwArtgyoy8F1fOlXDmW7qZ4Buw/gTuwIUyBb8YftNxTLWijqrjEwB/itTONKJOg3o3LWKn+7wkTvCmihYFNEr9E4CN7AJnhnNRKIBD1XUGeyfaMbJ0e1lo/q+RXezYEh3TGCu/rONcZPBaVdco=")
+arc4 = ARC4.new(pc_key)
+pc_output = arc4.decrypt(pc_cipher)
+pc_plaintext = [i for i in pc_output]
+
+for i in range(len(pc_plaintext)):
+    pcchk = 0
+    if(pcchk in pc_plaintext):
+        pc_plaintext.remove(0)
+        
+print("".join([chr(i) for i in pc_plaintext]))
+```
+
