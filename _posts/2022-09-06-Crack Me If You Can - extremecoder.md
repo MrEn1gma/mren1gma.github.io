@@ -1,5 +1,5 @@
 ---
-title: Crack Me If You Can
+title: Crack Me If You Can - defeating custom Self Modify with IDAPython
 date: 2022-09-06 12:00:00 +0700
 categories: [CTF, RE]
 tags: [selfmodify, idapython]     
