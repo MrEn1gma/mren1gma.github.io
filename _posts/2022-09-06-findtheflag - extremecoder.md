@@ -6,7 +6,7 @@ tags: [selfmodify, idapython]
 ---
 # Preface
 
-This crackme I got from https://forum.tuts4you.com/topic/37666-crackme-find-the-flag-by-extremecoders/ .Although this chall is a bit old (since 2015), It still helped me to improve my IDAPython's skill.
+This crackme I got from [tut4you](https://forum.tuts4you.com/topic/37666-crackme-find-the-flag-by-extremecoders/) .Although this chall is a bit old (since 2015), It still helped me to improve my IDAPython's skill.
 
 ## Introduction
 
