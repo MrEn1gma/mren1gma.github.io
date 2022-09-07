@@ -24,7 +24,7 @@ Phân tích hàm `main`, mình nhận thấy rằng IDA chỉ nhận diện đư
 
 * Gọi `STAGE 1` là quá trình thực hiện 3 bước `Giải mã -> Thực thi code -> Mã hoá` của nhóm bytecodes thứ nhất (chú ý rằng bytecodes mà địa chỉ 0x401056 trở đi nó được chia thành từng nhóm nhỏ để thực hiện theo `STAGE`). Nếu mình debug tới STAGE thứ `N`, nghĩa là `N - 1` STAGE trước đó đã bị modified về các bytecodes ban đầu, hiểu nôm na rằng chương trình ngăn chặn không cho mình xem được full mã giả.
 
-![main_b](/assets/img/findtheflag_img/flow_graph.png)
+![main_b](/assets/img/findtheflag_img/flow_graph.jpg)
 
 ## Chiến thuật
 **Nhận xét:** Đối với bài này, nếu luớt hết các bytecodes ở dưới, mình thấy có khá là nhiều, chưa kể mình cũng không biết chính xác Crackme này thực hiện bao nhiêu STAGE nên việc debug trong trong trường hợp này là không hiệu quả. Vì vậy sẽ thuận tiện hơn nếu như sử dụng IDAPython để decrypt các bytecodes trên. Vậy thì, để làm được điều này mình cần phải có những thông tin sau:
