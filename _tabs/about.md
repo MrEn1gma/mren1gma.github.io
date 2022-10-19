@@ -5,4 +5,18 @@ order: 4
 ---
 """
 # Hello World !!!
-I'm Hai Nguyen, also called `MrEn1gma` or `nth2579`. I'm a student and studying at HCMC University of Technology. I'm learning and researching in Reverse Engineering and Malware Analysis, also learning Cryptography :D. I'm looking for job about Malware Analysis in Ho Chi Minh's area, please contact me by email: `thanhhainguyen31337@gmail.com`.
+```c++
+#include <iostream>
+
+int main()
+{
+    std::string yourName = "Hai Nguyen";
+    std::string nickname = "nth2579";
+    std::string yourSchool = "HCMC University of Technology (Hu Tet)"
+    std::string interested_in[] = {"Takewondo", "RE malware for fun", "CTF"};
+    std::string looking_for_job = "In HCMC area";
+    std::string email_contact = "thanhhainguyen31337@gmail.com";
+    std::cout << "Thanks for reading <3";
+    return 0;
+}
+```
