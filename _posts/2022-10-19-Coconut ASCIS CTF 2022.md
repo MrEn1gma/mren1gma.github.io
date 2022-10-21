@@ -217,7 +217,7 @@ Chạy file script trên, mình đã tìm ra được key: `Ytd_is_history_Tmr_i
 
 Tuy nhiên trong lúc chạy thì file `PANDA.png` đã được dump ra:
 
-![flag1](/assets/img/ASCIScoconut_img/PANDA.jpg)
+![flag1](/assets/img/ASCIScoconut_img/PANDA.png)
 
 Như vậy mình đã có được 1 phần của flag: `ASCIS{7hat's_Why_7h3y_call_it`. Tuy nhiên phần còn lại của flag thì mình chưa biết, vì cái thông báo trên powershell lúc nãy đã cho mình biết được nhiệm vụ tiếp theo phải bypass được đoạn đó để tìm ra flag còn lại.
 
@@ -269,11 +269,11 @@ Tìm số 206 và 11, mình thấy nó nằm trong mảng `water06`. Pattern đ�
 
 * `water06` sau khi được modified:
 
-![warer06](/assets/img/ASCIScoconut_img/photo_2022-10-21_15-40-44.jpg)
+![warer06_1](/assets/img/ASCIScoconut_img/photo_2022-10-21_15-40-44.jpg)
 
 Cuối cùng, chạy file sau khi sửa, ta đã thành công dump được file `DRAGON_WARRIOR.png`:
 
-![warer06](/assets/img/ASCIScoconut_img/DRAGON WARRIOR.png)
+![flag2](/assets/img/ASCIScoconut_img/DRAGON WARRIOR.png)
 
 Flag thứ 2: `_Prrrres3nt!!!!}`
 
